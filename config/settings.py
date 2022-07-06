@@ -100,8 +100,10 @@ DATABASE_URL = env(
     "DATABASE_URL",
     default=f"postgres://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
+print(env("DATABASE_URL"))
+print(DATABASE_URL)
 DATABASES = {
-    'default': env.db(default=DATABASE_URL)
+    'default': env.db("DATABASE_URL", default=DATABASE_URL)
 }
 
 print(DATABASES)
