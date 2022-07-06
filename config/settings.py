@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'super-secret-key'
+SECRET_KEY = os.getenv("SECRET_KEY") or "super-secret-key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -91,11 +91,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': '5432'
+        'NAME': os.getenv('DB_NAME') or "postgres",
+        'USER': os.getenv('DB_USER') or "postgres",
+        'PASSWORD': os.getenv('DB_PASSWORD') or "postgres",
+        'HOST': os.getenv('DB_HOST') or "localhost",
+        'PORT': os.getenv('DB_PORT') or "5432"
     }
 }
 
@@ -179,7 +179,6 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 
 # CELERY
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
