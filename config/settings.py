@@ -91,18 +91,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+DB_NAME = env("DB_NAME", default="postgres")
+DB_USER = env("DB_USER", default="postgres")
+DB_PASSWORD = env("DB_PASSWORD", default="postgres")
+DB_HOST = env("DB_HOST", default="localhost")
+DB_PORT = env("DB_PORT", default="5432")
+DATABASE_URL = env(
+    "DATABASE_URL",
+    default=f"postgres://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME', default="postgres"),
-        'USER': env('DB_USER', default="postgres"),
-        'PASSWORD': env('DB_PASSWORD', default="postgres"),
-        'HOST': env('DB_HOST', default="localhost"),
-        'PORT': env('DB_PORT', default="5432")
-    }
+    'default': env.db(default=DATABASE_URL)
 }
 
+print(DATABASES)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
