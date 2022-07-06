@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div><form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form></div>
+    <div>
+        <table>
+            <tbody>
+                <thead>
+                    <tr>
+                        <th>Users</th>
+                        <th>Hashtags</th>
+                        <th>Posts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                        <tr class="{% cycle 'red' 'white' %}">
+                            <td>
+                                {% if object.user %}
+                                    <a href="{% url 'profile' slug=object.user.username %}">{{ object.user }}</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if object.hashtag %}
+                                    <a href="{% url 'search' %}?search={{ request.GET.search }}">{{ object.hashtag }}</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if object.post %}
+                                    <a href="{% url 'post_detail' pk=object.post.pk %}">{{ object.post }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

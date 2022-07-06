@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include "post_create.html" %}
+    {% for post in posts %}
+        <div>
+            <a href="{% url 'post_detail' pk=post.id %}">
+                {{ post.description }}
+            </a>
+        </div>
+        <div><a href="{% url 'profile' slug=post.user.username %}">{{ post.user }}</a></div>
+        <br>
+    {% endfor %}
+{% endblock %}

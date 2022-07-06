@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if request.user == user %}
+        {% if user.avatar %}
+            <div>
+                <img width="200px" src="{{user.avatar.url}}" alt="">
+            </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+    {% else %}
+        <h2>{{ user }}</h2>
+        <div>
+            <form action="{% url 'follow' slug=user.username %}", method="POST">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if user in request.user.following.all %}
+                        Unfollow
+                    {% else %}
+                        Follow
+                    {% endif %}
+                </button> 
+                
+            </form>
+        </div>
+    {% endif %}
+    {% for post in user.posts.all %}
+        <p><a href="{% url 'post_detail' pk=post.id %}">
+                <div><img width="100px" src="
+                    {% if post.image %}
+                        {{ post.image.url }}
+                    {% else %}
+                        https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg
+                    {% endif %}
+                    " alt=""></div>
+            {{ post.description }}
+        </a></p>
+    {% endfor %}
+{% endblock %}

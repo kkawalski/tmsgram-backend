@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load hashtag_extras %}
+
+{% block content %}
+    <div>
+        <img width="100px" src="
+        {% if post.image %}
+            {{ post.image.url }}
+        {% else %}
+            https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg
+        {% endif %}
+        " alt="">
+    </div>
+    <!-- {% if request.user == post.user %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+    {% else %}
+        <h2>{{ post.description|hashtag_links }}</h2>
+    {% endif %} -->
+    <h2>{{ post.description|hashtag_links }}</h2>
+{% endblock %}

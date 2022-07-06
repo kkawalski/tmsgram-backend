@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        {% for user in users %}
+            <div><a href="{% url 'profile' slug=user.username %}">{{ user }}</a></div>
+            <div>
+                <form action="{% url 'follow' slug=user.username %}?next=/profiles", method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if user in request.user.following.all %}
+                            Unfollow
+                        {% else %}
+                            Follow
+                        {% endif %}
+                    </button>    
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
