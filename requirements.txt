@@ -28,7 +28,6 @@ prompt-toolkit==3.0.30
 psycopg2-binary==2.9.3
 PyJWT==2.4.0
 pyparsing==3.0.9
-python-dotenv==0.20.0
 pytz==2022.1
 redis==4.3.4
 requests==2.28.0
