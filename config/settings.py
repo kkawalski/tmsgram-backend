@@ -28,7 +28,7 @@ print(env)
 SECRET_KEY = env("SECRET_KEY", default="super-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(env("DEBUG", default=False))
 
 ALLOWED_HOSTS = ["*"]
 
@@ -100,13 +100,22 @@ DATABASE_URL = env(
     "DATABASE_URL",
     default=f"postgres://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
-print(env("DATABASE_URL"))
-print(DATABASE_URL)
+
 DATABASES = {
-    'default': env.db("DATABASE_URL", default=DATABASE_URL)
+    'default': DATABASE_URL
 }
 
-print(DATABASES)
+if 'RDS_HOSTNAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
