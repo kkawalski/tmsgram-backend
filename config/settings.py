@@ -189,5 +189,5 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # CELERY
-CELERY_BROKER_URL = env("REDIS_URL", "redis://redis:6379/0")
-CELERY_RESULT_BACKEND = env("REDIS_URL", "redis://redis:6379/0") 
+CELERY_BROKER_URL = env("REDIS_URL", default="redis://redis:6379/0")
+CELERY_RESULT_BACKEND = env("REDIS_URL", default="redis://redis:6379/0") 
