@@ -102,9 +102,8 @@ DATABASE_URL = env(
 )
 
 DATABASES = {
-    'default': DATABASE_URL
+    'default': env.db("DATABASE_URL", default=DATABASE_URL)
 }
-
 if 'RDS_HOSTNAME' in os.environ:
     DATABASES = {
         'default': {
@@ -116,6 +115,7 @@ if 'RDS_HOSTNAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
+print(DATABASES)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
